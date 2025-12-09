@@ -1,0 +1,333 @@
+:root {
+  color-scheme: light;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  --sidebar-width: 380px;
+  --accent: #1976d2;
+  --accent-dark: #0d47a1;
+  --bg: #f5f7fb;
+  --border: #d6d9e2;
+  --text: #1f2430;
+  --muted: #5f6368;
+  --error: #d32f2f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  padding: 1.5rem;
+  overflow-y: auto;
+  background: #ffffff;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sidebar h1 {
+  margin: 0;
+  font-size: 1.45rem;
+}
+
+.sidebar h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+input[type="text"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--border);
+  font: inherit;
+  background: #fbfcff;
+  color: inherit;
+  transition: border-color 0.2s;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.1);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.6rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button.primary {
+  background: var(--accent);
+  color: #fff;
+  margin-top: 0.5rem;
+}
+
+.created-node-actions button {
+  width: 100%;
+}
+
+button.primary:hover {
+  background: var(--accent-dark);
+}
+
+.selection-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+button.toggle {
+  background: #e8f0fe;
+  color: var(--accent);
+  border: 1px solid transparent;
+}
+
+button.toggle.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+button.toggle:not(.active):hover {
+  border-color: var(--accent);
+}
+
+.coords {
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+.create-node .toggle {
+  width: 100%;
+}
+
+.create-node .created-node-list {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.create-node select {
+  width: 100%;
+}
+
+.create-node .status {
+  margin-top: 0.35rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.create-node .status.error {
+  color: var(--error);
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.35rem;
+}
+
+#error-box {
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.6rem;
+  background: rgba(211, 47, 47, 0.1);
+  color: var(--error);
+  border: 1px solid rgba(211, 47, 47, 0.4);
+}
+
+.result {
+  background: #f8faff;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.result strong {
+  color: var(--text);
+}
+
+.result .segments {
+  margin: 0.75rem 0 0;
+  padding-left: 1.1rem;
+  color: var(--text);
+}
+
+.result .segments li {
+  margin-bottom: 0.35rem;
+}
+
+.result .segments .penalty {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(211, 47, 47, 0.18);
+  color: #b71c1c;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.graphml {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.graph-summary {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.graph-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.graph-toggle input {
+  width: auto;
+}
+
+#graphml-output {
+  width: 100%;
+  min-height: 140px;
+  resize: vertical;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: #fff;
+  font-family: "Fira Code", "Consolas", "Courier New", monospace;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+#graphml-output:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.1);
+}
+
+#download-graph-btn {
+  align-self: flex-start;
+  background: #455a64;
+  color: #fff;
+}
+
+#download-graph-btn:hover {
+  background: #1f2a30;
+}
+
+#map {
+  flex: 1;
+  position: relative;
+  background: #dfe7ef;
+}
+
+.leaflet-container.graph-only {
+  background: #fafafa;
+}
+
+.leaflet-container {
+  font: inherit;
+  color: inherit;
+}
+
+.leaflet-control-attribution {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.marker {
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: none;
+}
+
+.marker span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 6px rgba(31, 36, 48, 0.25);
+}
+
+.marker-start span {
+  background: #2e7d32;
+}
+
+.marker-goal span {
+  background: #c62828;
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 320px;
+  }
+
+  .layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-height: 40vh;
+  }
+
+  #map {
+    min-height: 60vh;
+  }
+}

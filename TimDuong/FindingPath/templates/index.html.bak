@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pathfinding OSM Demo</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <h1>So sánh thuật toán tìm đường</h1>
+        <section>
+          <label for="place-input">Khu vuc co dinh: Khuong Dinh (Thanh Xuan, Ha Noi)</label>
+          <input
+            id="place-input"
+            type="text"
+            value="Khuong Dinh, Thanh Xuan, Hanoi"
+            readonly
+          />
+          <div class="hint">Ung dung chi ho tro khu vuc Khuong Dinh (Thanh Xuan) va su dung du lieu offline da dong goi (full street, khong can Internet).</div>
+          <button id="load-map-btn" class="primary">Tai ban do Khuong Dinh</button>
+        </section>
+
+        <section class="selection">
+          <h2>Chọn điểm và thuật toán</h2>
+          <div class="selection-buttons">
+            <button id="select-start" data-mode="start" class="toggle active">Chọn điểm xuất phát</button>
+            <button id="select-goal" data-mode="goal" class="toggle">Chọn điểm đích</button>
+          </div>
+          <div class="coords">
+            <div><strong>Xuất phát:</strong> <span id="start-display">Chưa chọn</span></div>
+            <div><strong>Đích:</strong> <span id="goal-display">Chưa chọn</span></div>
+          </div>
+
+          <label for="algorithm-select">Thuật toán</label>
+          <select id="algorithm-select">
+            <option value="astar">A*</option>
+            <option value="dijkstra">Dijkstra</option>
+            <option value="bfs">BFS</option>
+            <option value="dfs">DFS</option>
+          </select>
+
+          <label for="blocked-input">Chặn đường (mỗi dòng 1 tên đường)</label>
+          <textarea
+            id="blocked-input"
+            rows="3"
+            placeholder="Ví dụ:\nPhố Huế\nBạch Mai"
+          ></textarea>
+
+          <label for="flood-input">Vùng ngập (mỗi dòng là đa giác: lat,lon;lat,lon;...)</label>
+          <textarea
+            id="flood-input"
+            rows="3"
+            placeholder="21.01,105.85;21.011,105.851;21.012,105.85"
+          ></textarea>
+
+          <button id="run-btn" class="primary">Chạy tìm đường</button>
+          <div id="error-box" class="error" role="alert" hidden></div>
+        </section>
+
+        <section class="create-node">
+          <h2>Tao node moi</h2>
+          <p class="hint">
+            Bat che do roi click bat ky vi tri tren ban do, toa do se gui ve backend de tao node moi.
+          </p>
+          <button id="create-node-btn" class="toggle">Bat che do tao node</button>
+          <div id="create-node-status" class="status" aria-live="polite">Chua gui yeu cau nao.</div>
+          <div class="created-node-list">
+            <label for="created-node-select">Danh sach node da tao</label>
+            <select id="created-node-select">
+              <option value="">(Chua co node)</option>
+            </select>
+            <div class="created-node-actions">
+              <button id="delete-node-btn" type="button">Xoa node duoc chon</button>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Kết quả</h2>
+          <div id="result-panel" class="result">
+            Chọn 2 điểm trên bản đồ và chạy thuật toán để xem kết quả.
+          </div>
+        </section>
+
+        <section class="graphml">
+          <h2>Đồ thị GraphML</h2>
+          <label class="graph-toggle">
+            <input type="checkbox" id="graph-only-toggle" />
+            Ẩn nền bản đồ, chỉ hiển thị nút/cạnh
+          </label>
+          <div class="graph-summary">
+            <strong>Tổng quan:</strong> <span id="graph-summary">Chưa tải</span>
+          </div>
+          <textarea
+            id="graphml-output"
+            rows="8"
+            readonly
+            placeholder="GraphML sẽ hiển thị sau khi tải khu vực."
+          ></textarea>
+          <button id="download-graph-btn" type="button">Tải GraphML</button>
+        </section>
+      </aside>
+      <main id="map"></main>
+    </div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>

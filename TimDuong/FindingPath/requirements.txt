@@ -1,0 +1,5 @@
+folium>=0.14
+networkx>=3.0
+osmnx>=2.0.6
+shapely>=2.0
+Flask>=2.3

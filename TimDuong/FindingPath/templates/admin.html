@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin giao thông khu vực Khương Đình</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}" />
+  </head>
+  <body>
+    <div class="layout admin-layout">
+      <aside class="sidebar admin-sidebar">
+        <header class="admin-header">
+          <div class="admin-title">
+            <p class="eyebrow">Chế độ quản trị</p>
+            <h1>Bản đồ Khương Đình</h1>
+            <p class="hint">Chọn node bị ngập/ tắc</p>
+          </div>
+          <button id="logout-btn" class="ghost" type="button">Đăng Xuất</button>
+        </header>
+
+        <section id="login-card" class="card login-card">
+          <div class="login-header">
+            <div class="login-badge">AD</div>
+            <div>
+              <h2>Đăng nhập admin</h2>
+              <p class="login-lead">Chỉ quản trị mới xem được bản đồ và hệ số.</p>
+            </div>
+          </div>
+          <label for="username-input">Tài Khoản</label>
+          <input id="username-input" type="text" autocomplete="username" placeholder="admin" />
+          <label for="password-input">Mật Khẩu</label>
+          <input id="password-input" type="password" autocomplete="current-password" placeholder="******" />
+          <button id="login-btn" class="primary full">Đăng nhập</button>
+          <div id="login-error" class="error" hidden></div>
+          <p class="hint tight">Cẩn thận thông tin đăng nhập.</p>
+        </section>
+
+        <section id="controls-card" class="card" hidden>
+          <div class="card-header">
+            <h2>Điều chỉnh giao thông</h2>
+            <span class="badge" id="graph-meta">Khương Đình map</span>
+          </div>
+          <p class="hint">Bám vào chọn 2 node liền kề, sau đó gắn hệ số cho đoạn đường nối giữa hai node.</p>
+
+          <div class="selection-row">
+            <div>
+              <div class="label">Node 1</div>
+              <div id="selected-node-a" class="value">Chưa chọn</div>
+              <div id="selected-coords-a" class="label muted">--</div>
+            </div>
+            <div>
+              <div class="label">Node 2</div>
+              <div id="selected-node-b" class="value">Chưa chọn</div>
+              <div id="selected-coords-b" class="label muted">--</div>
+            </div>
+          </div>
+
+          <label for="kind-select">Trạng thái</label>
+          <select id="kind-select">
+            <option value="flood">Ngập</option>
+            <option value="traffic">Tắc Đường</option>
+            <option value="custom">He so khac</option>
+          </select>
+
+          <label for="multiplier-input">He so phat (> 0, nen >= 1)</label>
+          <input id="multiplier-input" type="number" step="0.1" min="0.1" value="2" />
+
+          <button id="save-penalty-btn" class="primary">Lưu hệ số</button>
+          <div id="admin-error" class="error" hidden></div>
+        </section>
+
+        <section id="penalties-card" class="card" hidden>
+          <div class="card-header">
+            <h2>Danh sách node đang bị thay đổi</h2>
+            <span class="badge" id="penalty-count">0</span>
+          </div>
+          <ul id="penalty-list" class="penalty-list"></ul>
+          <p class="hint tight">Ảnh hưởng của chọn hệ số cho cả hai chiều.</p>
+        </section>
+        <section id="forbidden-card" class="card" hidden>
+          <div class="card-header">
+            <h2>Đường bị cấm</h2>
+            <span class="badge" id="forbidden-count">0</span>
+          </div>
+          <p class="hint tight">Chọn 2 node liền kề rồi bấm để chặn hoàn toàn.</p>
+          <button id="save-forbidden-btn" class="ghost">Chặn đường</button>
+          <ul id="forbidden-list" class="penalty-list"></ul>
+        </section>
+      </aside>
+
+      <main id="admin-map"></main>
+    </div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="{{ url_for('static', filename='admin.js') }}"></script>
+  </body>
+</html>
